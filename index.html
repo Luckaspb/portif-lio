@@ -1,276 +1,161 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080a12">
-  <meta name="description" content="Luckas — Desenvolvedor Web. Desenvolvimento web com foco em performance, design e resultado.">
-  <meta property="og:title" content="Luckas — Desenvolvedor Web">
-  <meta property="og:description" content="Transformo ideias em experiências digitais.">
-  <title>Luckas — Desenvolvedor Web</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { --bg:#080a12; --surface:#10131e; --line:#252b3b; --text:#f7f8ff; --muted:#a5abc6; --blue:#3e63ff; --blue2:#657cff; --max:1240px; --gutter:clamp(22px,5.5vw,80px); }
-    *,*::before,*::after {box-sizing:border-box}
-    html {scroll-behavior:smooth;scroll-padding-top:90px}
-    body {margin:0;background:radial-gradient(ellipse 55% 25% at 85% 18%,rgba(38,57,140,.13),transparent 75%),var(--bg);color:var(--text);font-family:Geist,Arial,sans-serif;line-height:1.55;overflow-x:hidden}
-    body.menu-open {overflow:hidden}
-    a {color:inherit;text-decoration:none}
-    button {font:inherit}
-    img {max-width:100%;display:block}
-    h1,h2,h3,p {margin:0}
-    :focus-visible {outline:2px solid #91a1ff;outline-offset:4px}
-    .skip-link {position:fixed;z-index:200;top:-70px;left:16px;background:white;color:black;padding:10px 16px;border-radius:8px}
-    .skip-link:focus {top:12px}
-    .container {width:min(100%,var(--max));padding-inline:var(--gutter);margin-inline:auto}
-    .site-header {position:relative;z-index:30}
-    .site-header__inner {height:108px;display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(100%,var(--max));padding-inline:var(--gutter);margin-inline:auto}
-    .brand {font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(24px,2.1vw,31px);font-weight:800;letter-spacing:-.065em}
-    .site-nav {margin-left:auto}
-    .site-nav ul {display:flex;gap:clamp(24px,3.5vw,55px);list-style:none;padding:0;margin:0}
-    .site-nav a {color:#b5bddc;font-size:13px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;transition:color .2s}
-    .site-nav a:hover {color:white}
-    .header-cta {display:inline-flex;align-items:center;gap:12px;padding:13px 21px;background:linear-gradient(135deg,#171b29,#0e111c);border:1px solid #30374d;border-radius:18px;font-weight:600;font-size:14px;white-space:nowrap;box-shadow:0 8px 24px #0003}
-    .header-cta svg {width:19px;height:19px}
-    .menu-toggle {display:none}
-    .hero {position:relative;width:min(100%,var(--max));margin:0 auto;padding:clamp(75px,8vw,125px) var(--gutter) 110px;isolation:isolate}
-    .hero::before {content:"";position:absolute;z-index:-1;right:4%;top:16%;width:46%;aspect-ratio:1;background:radial-gradient(circle,rgba(53,76,228,.19),transparent 67%);filter:blur(34px);pointer-events:none}
-    .hero__visual {position:relative;min-height:clamp(300px,35vw,470px)}
-    .hero__title-wrap {position:relative;z-index:2;width:max-content;max-width:100%}
-    .hero__name {font-family:'Bricolage Grotesque',Arial,sans-serif;font-size:clamp(88px,11.8vw,168px);font-weight:800;letter-spacing:-.085em;line-height:.91;display:flex;flex-direction:column;align-items:flex-start}
-    .hero__luckas {color:#fafaff;white-space:nowrap}
-    .hero__dev {color:#526bff;display:inline-flex;align-items:center;gap:.13em;white-space:nowrap;text-shadow:0 0 50px rgba(65,80,255,.13)}
-    .hero__bar {display:inline-block;height:.83em;width:.018em;min-width:3px;background:#788cff;box-shadow:0 0 20px rgba(98,114,255,.7)}
-    .hero__notebook {
-    position: absolute;
-    z-index: 3;
-    right: 5%;
-    top: 3%;
-    width: 52%;
-    max-width: 660px;
-    pointer-events: none;
-    filter: drop-shadow(0 25px 30px rgba(25,40,140,.22));
-}
-    .hero__notebook img {width:100%;height:auto}
-    .hero__copy {max-width:640px;margin-top:10px;color:var(--muted);font-size:clamp(18px,2vw,25px);line-height:1.48;letter-spacing:-.015em}
-    .hero__actions {display:flex;flex-wrap:wrap;gap:16px;margin-top:44px}
-    .btn {display:inline-flex;align-items:center;justify-content:center;gap:16px;min-height:60px;padding:16px 32px;border-radius:20px;border:1px solid transparent;font-weight:600;font-size:16px;transition:transform .2s,background .2s,border-color .2s;cursor:pointer}
-    .btn:hover {transform:translateY(-3px)}
-    .btn--solid {background:linear-gradient(120deg,#3d5efb,#3e66ff);color:white;box-shadow:0 12px 35px #3157fa28}
-    .btn--ghost {background:linear-gradient(145deg,#171b28,#0d1019);border-color:#343b50;box-shadow:inset 0 0 0 1px #ffffff0a}
-    .btn svg {width:20px;height:20px;flex:none}
-    .hero__socials {display:flex;align-items:center;gap:16px;margin-top:36px}
-    .social-link {display:grid;place-items:center;width:51px;height:51px;border-radius:50%;background:#171b29;border:1px solid #1e2433;transition:transform .2s,background .2s}
-    .social-link:hover {transform:translateY(-3px);background:#252d48}
-    .social-link svg {width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-    .section {padding:100px 0}
-    .section__title {font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(36px,5.5vw,68px);font-weight:750;letter-spacing:-.055em;line-height:1.05;margin-bottom:45px}
-    .projects {border-top:1px solid var(--line)}
-    .project-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
-    .project {min-width:0;background:linear-gradient(155deg,#141827,#0b0d16);border:1px solid #252b3d;border-radius:22px;overflow:hidden;transition:transform .25s,border-color .25s}
-    .project:hover {transform:translateY(-5px);border-color:#4b60b0}
-    .project__image {display:block;aspect-ratio:16/10;overflow:hidden;background:#151928}
-    .project__image img {width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .45s}
-    .project:hover .project__image img {transform:scale(1.035)}
-    .project__body {display:flex;align-items:center;justify-content:space-between;gap:15px;padding:25px}
-    .project__name {font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(27px,3vw,38px);font-weight:800;letter-spacing:-.04em}
-    .project__link {display:inline-flex;align-items:center;gap:8px;color:#c5ceff;font-size:14px;font-weight:600;white-space:nowrap}
-    .project__link svg {width:18px;height:18px}
-    .contact {border-top:1px solid var(--line);background:linear-gradient(180deg,#0d101c,#090b12)}
-    .contact__title {font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(38px,6vw,72px);letter-spacing:-.055em;line-height:1.12;max-width:900px}
-    .contact__lead {margin-top:20px;color:var(--muted);font-size:18px}
-    .contact__list {display:grid;gap:0;list-style:none;padding:0;margin:45px 0 0;border-top:1px solid var(--line)}
-    .contact__list li {border-bottom:1px solid var(--line)}
-    .contact__row {display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0;transition:color .2s}
-    .contact__row:hover {color:#91a3ff}
-    .contact__label {color:var(--muted);font-size:14px}
-    .contact__value {font-size:clamp(16px,2.4vw,24px);font-weight:600;overflow-wrap:anywhere;text-align:right}
-    .site-footer {border-top:1px solid var(--line);padding:28px 0;color:#8f96ad;font-size:14px}
-    .site-footer__inner {display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-    @media(max-width:900px) {
-      .site-header__inner {height:78px}
-      .header-cta {display:none}
-      .hero {padding-top:80px;padding-bottom:90px}
-      .hero__visual {min-height:clamp(300px,43vw,430px)}
-      .hero__name {font-size:clamp(76px,12vw,115px)}
-      .hero__notebook {width:55%;right:-4%;top:16%}
-    }
-    @media(max-width:767px) {
-      :root {--gutter:24px}
-      .site-header__inner {height:86px}
-      .brand {font-size:27px}
-      .menu-toggle {display:flex;align-items:center;gap:13px;background:none;border:0;color:white;cursor:pointer;padding:10px 0}
-      .menu-toggle__label {font-size:14px}
-      .menu-toggle__bars {display:flex;flex-direction:column;justify-content:space-between;width:25px;height:17px}
-      .menu-toggle__bars i {display:block;height:2px;background:white;width:100%;transition:transform .2s}
-      .menu-toggle[aria-expanded="true"] .menu-toggle__bars i:first-child {transform:translateY(7.5px) rotate(45deg)}
-      .menu-toggle[aria-expanded="true"] .menu-toggle__bars i:last-child {transform:translateY(-7.5px) rotate(-45deg)}
-      .site-nav {position:fixed;inset:86px 0 0;background:#080a12;z-index:40;padding:30px var(--gutter);visibility:hidden;opacity:0;pointer-events:none;transition:opacity .2s,visibility .2s}
-      body.menu-open .site-nav {visibility:visible;opacity:1;pointer-events:auto}
-      .site-nav ul {flex-direction:column;gap:24px}
-      .site-nav a {font-size:30px;color:white}
-      .hero {padding:72px var(--gutter) 75px}
-      .hero__visual {min-height:0;display:flex;flex-direction:column;align-items:stretch}
-      .hero__title-wrap {width:100%}
-      .hero__name {font-size:clamp(66px,15.5vw,112px);line-height:.94;letter-spacing:-.075em}
-      .hero__notebook {position:relative;right:auto;top:auto;z-index:1;width:100%;max-width:410px;margin:12px auto 0;filter:drop-shadow(0 15px 30px #1f32ab30)}
-      .hero__copy {margin-top:5px;font-size:clamp(17px,4.25vw,21px);line-height:1.55}
-      .hero__actions {display:grid;grid-template-columns:1fr;gap:13px;margin-top:30px}
-      .btn {width:100%;min-height:58px;border-radius:18px}
-      .hero__socials {justify-content:space-between;max-width:300px;margin:30px auto 0;gap:12px}
-      .social-link {width:52px;height:52px}
-      .section {padding:76px 0}
-      .section__title {margin-bottom:28px}
-      .project-grid {grid-template-columns:1fr;gap:18px}
-      .project__body {padding:20px}
-      .contact__row {align-items:flex-start;flex-direction:column;gap:5px}
-      .contact__value {text-align:left}
-    }
-    @media(max-width:360px) {.hero__name {font-size:15vw}.hero {padding-top:55px}.hero__notebook {margin-top:6px}}
-    @media(prefers-reduced-motion:reduce) {html {scroll-behavior:auto}*,*::before,*::after {transition:none!important;animation:none!important}}
-  </style>
-</head>
+<html lang="PT-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Luckas|Desenvolvedor Web</title>
+       <link rel="preconnect" href="https://fonts.googleapis.com">
+       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+       
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        
+
 <body>
-  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-  <header class="site-header" id="topo">
-    <div class="site-header__inner">
-      <a class="brand" href="#inicio" aria-label="Luckas, voltar ao início">Luckas</a>
-      <nav class="site-nav" id="menu-principal" aria-label="Navegação principal">
-        <ul>
-          <li><a href="#inicio">Início</a></li>
-          <li><a href="#projetos">Projetos</a></li>
-          <li><a href="#contato">Contato</a></li>
-        </ul>
-      </nav>
-      <a class="header-cta" href="#contato">Vamos conversar?
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 19 5M8 5h11v11"/></svg>
-      </a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
-        <span class="menu-toggle__label">Menu</span><span class="menu-toggle__bars" aria-hidden="true"><i></i><i></i></span>
-      </button>
-    </div>
-  </header>
-  <main id="conteudo">
-    <section class="hero" id="inicio" aria-labelledby="hero-titulo">
-      <div class="hero__visual">
-        <div class="hero__title-wrap">
-          <h1 class="hero__name" id="hero-titulo"><span class="hero__luckas">LUCKAS</span><span class="hero__dev">DEV<span class="hero__bar" aria-hidden="true"></span></span></h1>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Luckas</h1>
+            <p>DEV | Desenvolvedor Web</p>
+
+            <nav class="hero-nav">
+                <a href="#projetos">PROJETOS</a>
+                <a href="#contato">CONTATOS</a>
+            </nav>
         </div>
-        <div class="hero__notebook"><img src="image/Notebook.png" alt="Notebook com iluminação azul, representando desenvolvimento web" fetchpriority="high"></div>
-      </div>
-      <p class="hero__copy">Desenvolvimento web com foco em performance, design e resultado.<br>Transformo ideias em experiências digitais.</p>
-      <div class="hero__actions">
-        <a class="btn btn--solid" href="#projetos">Ver meus projetos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19 19 5M8 5h11v11"/></svg></a>
-        <a class="btn btn--ghost" href="https://wa.me/5511970926442" target="_blank" rel="noopener noreferrer">Vamos conversar? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-4.5a9 9 0 0 1-.9-4A8.5 8.5 0 1 1 20 11.5Z"/></svg></a>
-      </div>
-      <div class="hero__socials" aria-label="Redes sociais e contato">
-        <a class="social-link" href="https://www.linkedin.com/in/luckas-barreto-ab65b1443/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7.5 10v7M7.5 7.1v.2M11.5 17v-7M11.5 13.2a3 3 0 0 1 6 0V17"/></svg></a>
-        <a class="social-link" href="https://wa.me/5511970926442" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-4.5a9 9 0 0 1-.9-4A8.5 8.5 0 1 1 20 11.5Z"/><path d="M8.5 8.7c.4 3 2.2 4.8 5.3 6 .6.2 1.1-.2 1.5-.8"/></svg></a>
-        <a class="social-link" href="mailto:luckasbdev@gmail.com" aria-label="Enviar e-mail"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg></a>
-      </div>
-    </section>
-    <section class="section projects" id="projetos" aria-labelledby="projetos-titulo">
-      <div class="container">
-        <h2 class="section__title" id="projetos-titulo">Projetos selecionados</h2>
-        <div class="project-grid" id="lista-projetos"></div>
-      </div>
-    </section>
-    <section class="section contact" id="contato" aria-labelledby="contato-titulo">
-      <div class="container">
-        <h2 class="contact__title" id="contato-titulo">Tem uma ideia ou um projeto em mente? Vamos conversar.</h2>
-        <p class="contact__lead">Escolha o canal que for melhor para você. Respondo com atenção a cada mensagem.</p>
-        <ul class="contact__list" id="lista-contatos"></ul>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer"><div class="container site-footer__inner"><p>© <span id="ano">2026</span> Luckas</p><p>Feito com calma e atenção aos detalhes.</p></div></footer>
-  <script>
-    // Dados preservados do portfólio original. Para adicionar projetos, copie um item.
-    window.PORTFOLIO = {
-      projects: [
-      {
-  id: "aurea",
-  name: "AUREA",
-  image: "image/Capa Aurea.png",
-  imageAlt: "Imobiliária de luxo AUREA com tour 3D interativo",
-  url: "https://imob-iliaria.vercel.app/"
-},
-        {id:"lume",name:"LUME",image:"image/Capa Lume_ Sabores Artesanais.png",imageAlt:"Capa do projeto LUME, cardápio digital",url:"https://food-visuals-app.lovable.app"},
-        {id:"drip",name:"DRIP",image:"image/streetwear DRIP .png",imageAlt:"Capa do projeto DRIP, loja virtual de streetwear",url:"https://drip-liard.vercel.app"},
-        {id:"berry-dash",name:"BERRY DASH",image:"image/berry-dash.png",imageAlt:"Capa do projeto Berry Dash, landing page de açaí",url:"https://berry-dash-order.lovable.app"}
-      ],
-      contacts: [
-        {label:"WhatsApp",value:"(11) 97092-6442",href:"https://wa.me/5511970926442"},
-        {label:"E-mail",value:"luckasbdev@gmail.com",href:"mailto:luckasbdev@gmail.com"},
-        {label:"LinkedIn",value:"linkedin.com/in/luckas-barreto",href:"https://www.linkedin.com/in/luckas-barreto-ab65b1443/"}
-      ]
-    };
-    (function () {
-      "use strict";
-      const data = window.PORTFOLIO;
-      const projects = document.getElementById("lista-projetos");
-      data.projects.forEach(project => {
-        const article = document.createElement("article");
-        article.className = "project";
-        article.id = "projeto-" + project.id;
-        const imageLink = document.createElement("a");
-        imageLink.className = "project__image";
-        imageLink.href = project.url;
-        imageLink.target = "_blank";
-        imageLink.rel = "noopener noreferrer";
-        imageLink.setAttribute("aria-label", "Abrir projeto " + project.name);
-        const image = document.createElement("img");
-        image.src = project.image;
-        image.alt = project.imageAlt;
-        image.loading = "lazy";
-        imageLink.appendChild(image);
-        const body = document.createElement("div");
-        body.className = "project__body";
-        const name = document.createElement("h3");
-        name.className = "project__name";
-        name.textContent = project.name;
-        const link = document.createElement("a");
-        link.className = "project__link";
-        link.href = project.url;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.textContent = "Ver projeto ↗";
-        body.append(name, link);
-        article.append(imageLink, body);
-        projects.appendChild(article);
-      });
-      const contacts = document.getElementById("lista-contatos");
-      data.contacts.forEach(contact => {
-        const li = document.createElement("li");
-        const link = document.createElement("a");
-        link.className = "contact__row";
-        link.href = contact.href;
-        if (contact.href.startsWith("https://")) {link.target="_blank";link.rel="noopener noreferrer";}
-        const label = document.createElement("span");
-        label.className = "contact__label";
-        label.textContent = contact.label;
-        const value = document.createElement("span");
-        value.className = "contact__value";
-        value.textContent = contact.value;
-        link.append(label,value);
-        li.appendChild(link);
-        contacts.appendChild(li);
-      });
-      document.getElementById("ano").textContent = new Date().getFullYear();
-      const toggle = document.querySelector(".menu-toggle");
-      const nav = document.getElementById("menu-principal");
-      function setMenu(open) {
-        document.body.classList.toggle("menu-open",open);
-        toggle.setAttribute("aria-expanded",String(open));
-        toggle.querySelector(".menu-toggle__label").textContent=open?"Fechar":"Menu";
-      }
-      toggle.addEventListener("click",()=>setMenu(toggle.getAttribute("aria-expanded")!=="true"));
-      nav.addEventListener("click",event=>{if(event.target.closest("a"))setMenu(false);});
-      document.addEventListener("keydown",event=>{if(event.key==="Escape")setMenu(false);});
-      window.addEventListener("resize",()=>{if(window.innerWidth>=768)setMenu(false);});
-    })();
-  </script>
+    </header>
+
+    <section id="projetos" class="projects">
+        <div class="projects-header">
+            <span>02 / PORTFÓLIO</span>
+            <h2>Projetos selecionados</h2>
+        </div>
+        
+<div class="projects-carousel">
+
+    
+<div class="project-card">
+    <img
+        src="assets/aurea.png"
+        alt="Prévia do projeto AUREA, site imobiliário"
+        class="project-image"
+    >
+    <h3>AUREA</h3>
+    <a href="https://imob-iliaria.vercel.app/"
+   class="project-cta"
+   target="_blank"
+   rel="noopener noreferrer">
+    VER PROJETO ↗
+</a>
+
+</div>
+
+    
+     
+<div class="project-card active">
+    <img src="assets/lume.png"
+         alt="Prévia do projeto LUME, restaurante sofisticado"
+         class="project-image">
+    <h3>LUME</h3>
+    <a href="https://food-visuals-app.lovable.app/"
+   class="project-cta"
+   target="_blank"
+   rel="noopener noreferrer">
+    VER PROJETO ↗
+</a>
+
+</div>
+
+
+    
+<div class="project-card">
+    <img src="assets/drip.png"
+         alt="Prévia do projeto DRIP, marca de streetwear"
+         class="project-image">
+    <h3>DRIP</h3>
+    <a href="https://drip-liard.vercel.app/"
+   class="project-cta"
+   target="_blank"
+   rel="noopener noreferrer">
+    VER PROJETO ↗
+</a>
+
+</div>
+
+    
+    
+<div class="project-card">
+    <img src="assets/berry-dash.png"
+         alt="Prévia do projeto BERRY DASH, marca de açaí"
+         class="project-image">
+    <h3>BERRY DASH</h3>
+    <a href="https://berry-dash-order.lovable.app/"
+   class="project-cta"
+   target="_blank"
+   rel="noopener noreferrer">
+    VER PROJETO ↗
+</a>
+
+</div>
+
+</div>
+
+<div class="carousel-controls">
+    <button class="carousel-prev" type="button" aria-label="Projeto anterior">
+        ←
+    </button>
+
+    <button class="carousel-next" type="button" aria-label="Próximo projeto">
+        →
+    </button>
+</div>
+
+
+</section>
+
+<section id="contato" class="contact">
+
+    <div class="contact-header">
+        <span>03 / CONTATO</span>
+    </div>
+
+    <div class="contact-content">
+        <h2>Vamos criar algo extraordinário?</h2>
+
+        <p>
+            Tem um projeto em mente?
+    Vamos transformar sua ideia em uma
+    experiência digital que leve seu trabalho
+    a milhares de pessoas.
+        </p>
+
+        
+
+<a href="https://wa.me/55SEUNUMERO?text=Ol%C3%A1%2C%20Luckas%21%20Tudo%20bem%3F%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto.%20%F0%9F%9A%80"
+   class="contact-button"
+   target="_blank"
+   rel="noopener noreferrer">
+    INICIAR CONVERSA ↗
+</a>
+
+
+    </div>
+
+</section>
+
+<footer class="footer">
+    <span>LUCKAS.DEV © 2026</span>
+    <span>DESENVOLVIDO COM PROPÓSITO ↗</span>
+</footer>
+
+
+<script src="script.js"></script>
+
 </body>
 </html>
+
+
+</body>
