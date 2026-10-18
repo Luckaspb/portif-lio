@@ -505,3 +505,6 @@ body {
         padding: 30px 6%;
     }
 }
+.carousel-controls {
+  display: none;
+}

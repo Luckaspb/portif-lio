@@ -1,3 +1,4 @@
+
 const cards = document.querySelectorAll('.project-card');
 const carousel = document.querySelector('.projects-carousel');
 
