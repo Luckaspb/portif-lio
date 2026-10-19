@@ -23,17 +23,19 @@ function updateCarousel() {
         behavior: 'smooth'
     });
 }
+if (nextButton) {
+    nextButton.addEventListener('click', () => {
+        activeIndex = (activeIndex + 1) % cards.length;
+        updateCarousel();
+    });
+}
 
-nextButton.addEventListener('click', () => {
-    activeIndex = (activeIndex + 1) % cards.length;
-    updateCarousel();
-});
-
-prevButton.addEventListener('click', () => {
-    activeIndex = (activeIndex - 1 + cards.length) % cards.length;
-    updateCarousel();
-});
-
+if (prevButton) {
+    prevButton.addEventListener('click', () => {
+        activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+        updateCarousel();
+    });
+}
 cards.forEach((card, index) => {
     card.addEventListener('click', () => {
         activeIndex = index;
